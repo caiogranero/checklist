@@ -33,7 +33,7 @@ module.exports = {
         enforce: 'pre',
         include: [],
         options: {
-          // formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter')
         }
       },
       {

@@ -2,9 +2,20 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
-import router from './router';
+import VueRouter from 'vue-router'
+import Hello from './components/Hello.vue'
+import Tasks from './components/Tasks.vue'
 
-Vue.config.productionTip = false;
+Vue.use(VueRouter)
+
+// Vue.config.productionTip = false;
+
+const router = new VueRouter({
+	routes: [
+		{path: '/tarefas/:period', component: Tasks, name: 'Tasks'},
+		{path: '/', component: Hello},
+	],
+});
 
 /* eslint-disable no-new */
 new Vue({
