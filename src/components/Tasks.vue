@@ -5,24 +5,14 @@
 
 <template>
   <div class="content">
-  	<ui-grid container class="hidden">
-      <ui-row>
-        <ui-column class="sixteen wide">
-        	<form class="ui form">
-					  <div class="field">
-					    <div class="fields">
-					      <div class="twelve wide field">
-					        <input type="text" name="description" id="date" placeholder="Descrição da tarefa">
-					      </div>
-					      <div class="four wide field">
-					        <input type="text" name="date" id="date" placeholder="Data">
-					      </div>
-					      <input type="button" class="ui button" value="Adicionar tarefa">
-					    </div>
-					  </div>
-					</form>
-        </ui-column>
-      </ui-row>
+
+  	<ui-grid container v-if="newTaskFast">
+			<!-- <div class="ui raised container segment">
+			  
+			</div> -->
+			<i class="close icon" v-on:click="hideAddTaskFast()"></i>
+      <new-task-fast></new-task-fast>
+
     </ui-grid>
 
     <ui-grid container>
@@ -31,23 +21,37 @@
           <h2>{{ msg }}</h2>
         </ui-column>
         <ui-column class="eleven wide right aligned" id="new-task">
-          <i class="plus icon"></i> Nova tarefa
+          <i class="plus icon" v-on:click="showAddTaskFast()"></i> Nova tarefa
         </ui-column>
       </ui-row>
     </ui-grid>
+
   </div>
 </template>
 
 <script>
 	import { Mixin } from 'semantic-ui-vue2';
+	import NewTaskFast from './NewTaskFast'
 
  	export default {
   	name: 'Tasks',
+  	components: {
+	    NewTaskFast
+	  },
   	mixins: [Mixin],
   	data () {
 	  		return {
-	  			msg: "Hoje"
+	  			msg: "Hoje",
+	  			newTaskFast: false
 	  		}
-  	}
+  	},
+  	methods:{
+	    showAddTaskFast : function(){
+	      this.newTaskFast = true;
+	    },
+	    hideAddTaskFast : function(){
+	      this.newTaskFast = false;
+	    }
+	  }
  	}
 </script>
