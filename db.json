@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "caio.granero@usp.br",
+      "name": "Caio Granero",
+      "password": "123",
+      "tasks": [
+        {
+          "name": "Tarefa 1",
+          "description": "Descrição da tarefa 1",
+          "created_at": "23/04/2017 10:10:22",
+          "duration": "5",
+          "remind": "10",
+          "last_update": "25/04/2017 10:10:12",
+          "isRemoved": false,
+          "isOpen": true,
+          "isDelay": false
+        }
+      ]
+    }
+  ]
+}
