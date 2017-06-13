@@ -5,12 +5,12 @@
 			  <div class="field">
 			    <div class="fields">
 			      <div class="twelve wide field">
-			        <input type="text" name="description" id="date" placeholder="Descrição da tarefa">
+			        <input type="text" name="name" id="name" v-model="name" placeholder="Descrição da tarefa">
 			      </div>
 			      <div class="four wide field">
-			        <input type="text" name="date" id="date" placeholder="Data">
+			        <input type="text" name="date" id="date" placeholder="Data" v-model="date">
 			      </div>
-			      <input type="button" class="ui button" value="Adicionar tarefa">
+			      <input type="button" v-on:click="newTask()" class="ui button" value="Adicionar tarefa">
 			    </div>
 			  </div>
 			</form>
@@ -20,11 +20,45 @@
 
 <script>
 
-import { Mixin } from 'semantic-ui-vue2';
+  import { Mixin } from 'semantic-ui-vue2';
+  import Tasks from './Tasks';
 
-export default {
-  name: 'NewTaskFast',
-  mixins: [Mixin]
-}
+  const moment = require('moment');
+
+  export default {
+    name: 'NewTaskFast',
+    components: {
+      Tasks
+    },
+    mixins: [Mixin],
+    data () {
+    	return {
+    		date: null,
+    		name: null
+    	}
+    },
+    methods: {
+  	  newTask : function() {
+
+  	  	let data = {
+            name        :    this.name,
+            task_date   :    moment(this.date),
+            task_week   :    moment(this.date).week(),
+            task_month  :    moment(this.date).month(),
+            last_update :    moment(),
+            created_at  :    moment(),
+            userId      :    1,
+            isRemoved   :    false,
+            isOpen      :    true
+        };
+
+        this.$http.post('http://localhost:3000/users/1/tasks', JSON.stringify(data)).then(function (response) {
+          this.$parent.$parent.loadCurrentTasks();
+  		  });
+  	  }
+    }
+  }
 
 </script>
+
+

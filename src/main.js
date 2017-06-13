@@ -3,12 +3,17 @@
 import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource';
+
 import Hello from './components/Hello.vue'
 import Tasks from './components/Tasks.vue'
 
-Vue.use(VueRouter)
+window.Vue = Vue;
 
-// Vue.config.productionTip = false;
+const moment = require('moment');
+
+Vue.use(VueRouter)
+Vue.use(VueResource);
 
 const router = new VueRouter({
 	routes: [
@@ -17,10 +22,28 @@ const router = new VueRouter({
 	],
 });
 
-/* eslint-disable no-new */
-new Vue({
+Vue.mixin({
+  methods: {
+
+    // Make a GET request and return a promise
+    GetRequestTask: function(params) {
+      const currentUserId = 1
+      let filter = ""
+
+      for(var key in params){
+        filter += key + "=" + params[key] + "&"
+      }
+
+      filter = filter.slice(0, -1);
+
+      return this.$http.get('http://localhost:3000/users/'+currentUserId+'/tasks?'+filter);
+    }
+  }
+});
+
+let vm = new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App },
+  components: { App }
 });

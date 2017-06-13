@@ -26,8 +26,8 @@ export default {
   name: 'SideBar',
   methods:{
     showTasks : function(period){
-      this.$router.push({ 
-        name: 'Tasks', params: { 
+      this.$router.push({
+        name: 'Tasks', params: {
           period: period
         }
       });

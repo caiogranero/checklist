@@ -4,20 +4,51 @@
       "id": 1,
       "email": "caio.granero@usp.br",
       "name": "Caio Granero",
-      "password": "123",
-      "tasks": [
-        {
-          "name": "Tarefa 1",
-          "description": "Descrição da tarefa 1",
-          "created_at": "23/04/2017 10:10:22",
-          "duration": "5",
-          "remind": "10",
-          "last_update": "25/04/2017 10:10:12",
-          "isRemoved": false,
-          "isOpen": true,
-          "isDelay": false
-        }
-      ]
+      "password": "123"
+    }
+  ],
+  "tasks": [
+    {
+      "userId": 1,
+      "id": 1,
+      "name": "Tarefa 1",
+      "description": "Descrição da tarefa 1",
+      "created_at": "2017-06-13T03:00:00.000Z",
+      "task_date": "2017-06-13T03:00:00.000Z",
+      "duration": "5",
+      "remind": "10",
+      "last_update": "2017-06-13T03:00:00.000Z",
+      "task_week": "24",
+      "task_month": "5",
+      "isRemoved": false,
+      "isOpen": true
+    },
+    {
+      "userId": 1,
+      "id": 2,
+      "name": "Tarefa 2",
+      "description": "Descrição da tarefa 1",
+      "created_at": "2017-06-1203:00:00.000Z",
+      "task_date": "2017-06-12T03:00:00.000Z",
+      "duration": "5",
+      "remind": "10",
+      "task_week": "24",
+      "task_month": "5",
+      "last_update": "2017-06-12T03:00:00.000Z",
+      "isRemoved": false,
+      "isOpen": true
+    },
+    {
+      "name": "Descrição do Caio",
+      "task_date": "2017-06-20T03:00:00.000Z",
+      "task_week": 25,
+      "task_month": 5,
+      "last_update": "2017-06-20T23:23:31.786Z",
+      "created_at": "2017-06-20T23:23:31.786Z",
+      "userId": "1",
+      "id": 3,
+      "isRemoved": false,
+      "isOpen": true
     }
   ]
 }
