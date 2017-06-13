@@ -3,7 +3,7 @@
 
   	<ui-grid container v-if="newTaskFast">
 			<i class="close icon" v-on:click="hideAddTaskFast()"></i>
-      <new-task-fast loadCurrentTasks = loadCurrentTasks></new-task-fast>
+      <new-task-fast></new-task-fast>
     </ui-grid>
 
     <ui-grid container>
@@ -42,12 +42,13 @@
 <script>
 	import { Mixin } from 'semantic-ui-vue2';
 	import NewTaskFast from './NewTaskFast';
+
   const moment = require('moment');
 
  	export default {
   	name: 'Tasks',
   	components: {
-	    NewTaskFast
+	    NewTaskFast,
 	  },
   	mixins: [Mixin],
   	data () {
@@ -77,7 +78,20 @@
 	    },
 
       completeTask: function(taskId){
-        console.log(taskId);
+        let param = {
+          isOpen: false,
+          isComplete: true,
+          last_update: moment().format(),
+          ended_at: moment().format()
+        }
+
+        let editPromise = this.EditTask(taskId, param);
+        editPromise.then(function (response) {
+          this.$swal("Tarefa concluída com sucesso!", "", "success");
+          this.loadCurrentTasks(); //Recarrega as tarefas pendentes da página atual
+        }, function(){
+          this.$swal("Houve um erro enquanto concluia a tarefa.", "", "error");
+        });
       },
 
       //Hide task fields.
@@ -97,7 +111,7 @@
             params.task_week = moment().week().toString();
             break;
           case "today":
-            params.task_date = moment()._d;
+            params.task_date = moment().startOf('day').format();
             break;
           case "month":
             params.task_month = moment().month().toString();
@@ -107,6 +121,7 @@
         const tasks = this.GetRequestTask(params);
 
         tasks.then(function(response){
+
           this.$data.currentTasks = [];
 
           this.$data.currentTasks = response.data.reduce(function (r, a) {
@@ -119,6 +134,7 @@
               return r;
           }, Object.create(null));
         });
+
       }
 	  }
  	}

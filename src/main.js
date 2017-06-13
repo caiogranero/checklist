@@ -7,11 +7,13 @@ import VueResource from 'vue-resource';
 
 import Hello from './components/Hello.vue'
 import Tasks from './components/Tasks.vue'
+import VueSweetAlert from 'vue-sweetalert'
 
 window.Vue = Vue;
 
 const moment = require('moment');
 
+Vue.use(VueSweetAlert)
 Vue.use(VueRouter)
 Vue.use(VueResource);
 
@@ -37,6 +39,21 @@ Vue.mixin({
       filter = filter.slice(0, -1);
 
       return this.$http.get('http://localhost:3000/users/'+currentUserId+'/tasks?'+filter);
+    },
+
+    EditTask: function(idTask, newParams){
+      return this.$http.get('http://localhost:3000/tasks/'+idTask).then(function(response){
+
+        let db = response.data;
+
+        for(var key in newParams){
+          if(db[key] != newParams[key]){
+            db[key] = newParams[key];
+          }
+        }
+
+        return this.$http.put('http://localhost:3000/tasks/'+idTask, JSON.stringify(db));
+      });
     }
   }
 });
