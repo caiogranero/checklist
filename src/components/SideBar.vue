@@ -17,11 +17,16 @@
     <a class="item" v-on:click="showTasks('month')">
       <div class="ui small label">{{sidebar.qttMonth}}</div> Neste mês
     </a>
+
+    <div class="ui divider"></div>
+
+    <filters></filters>
   </div>
 </template>
 
 <script>
 
+import Filters from './Filters';
 const moment = require('moment');
 
 export default {
@@ -34,6 +39,9 @@ export default {
         qttMonth: null
       }
     }
+  },
+  components: {
+    Filters,
   },
   mounted: function(){
     this.getQttMonth();
@@ -48,6 +56,7 @@ export default {
         }
       });
     },
+
     getQttMonth: function(){
 
       let params = {
@@ -61,6 +70,7 @@ export default {
         this.sidebar.qttMonth = response.data.length;
       });
     },
+
     getQttToday: function(){
 
       let params = {
@@ -74,6 +84,7 @@ export default {
         this.sidebar.qttToday = response.data.length;
       });
     },
+
     getQttWeek: function(){
 
       let params = {
@@ -115,5 +126,9 @@ export default {
     background-color: #E04F5F!important;
     border-color: #E04F5F!important;
     color: #FFF!important;
+  }
+
+  #id {
+    text-align: center;
   }
 </style>

@@ -26,7 +26,6 @@ const router = new VueRouter({
 
 Vue.mixin({
   methods: {
-
     // Make a GET request and return a promise
     GetRequestTask: function(params) {
       const currentUserId = 1
@@ -61,6 +60,15 @@ Vue.mixin({
 let vm = new Vue({
   el: '#app',
   router,
+  data () {
+      return {
+        xpto: {
+          isOpen: false,
+          isComplete: true,
+          isRemoved: false
+        }
+      }
+  },
   template: '<App/>',
   components: { App }
 });
