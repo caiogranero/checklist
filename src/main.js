@@ -28,8 +28,8 @@ Vue.mixin({
   methods: {
     // Make a GET request and return a promise
     GetRequestTask: function(params) {
-      const currentUserId = 1
-      let filter = ""
+      const currentUserId = 1;
+      let filter = "";
 
       for(var key in params){
         filter += key + "=" + params[key] + "&"

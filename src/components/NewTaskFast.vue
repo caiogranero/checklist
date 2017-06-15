@@ -47,8 +47,8 @@
             task_date         :    moment(this.date, "DD/MM/YYYY").startOf('day').format(),
             task_week         :    moment(this.date, "DD/MM/YYYY").week(),
             task_month        :    moment(this.date, "DD/MM/YYYY").month(),
-            last_update       :    moment(),
-            created_at        :    moment(),
+            last_update       :    moment().format(),
+            created_at        :    moment().format(),
             userId            :    1,
             isRemoved         :    false,
             isOpen            :    true

@@ -30,7 +30,7 @@
             <i class="checkmark box icon" v-on:click="completeTask(task.id)"></i>
           </ui-column>
           <ui-column class="fourteen wide">
-            <p v-on:click="showEditTaskModal">{{task.name}}</p>
+            <p v-on:click="showEditTaskModal(task.id)">{{task.name}}</p>
           </ui-column>
           <ui-column class="one wide">
             <i class="remove icon" v-on:click="deleteTask(task.id)"></i>
@@ -40,6 +40,67 @@
        </template>
 
     </ui-grid>
+
+    <!-- Tags above will populate modal component -->
+    <div v-if="showModal">
+      <edit-task-modal>
+        <header slot="header">
+          <div class="ui right aligned grid">
+            <div class="right floated left aligned two wide column">
+                <i class="large remove icon" v-on:click="hideEditTaskModal()"></i>
+            </div>
+          </div>
+          <center><h3> Editar tarefa</h3></center>
+        </header>
+
+        <div slot="body">
+          <form class="ui fluid form">
+            <div class="field">
+              <div class="ui pointing below label">
+                Nome da tarefa
+              </div>
+              <input type="text" v-model="editModal.name" id="name" >
+            </div>
+
+            <div class="field">
+              <div class="ui pointing below label">
+                Data
+              </div>
+              <input type="text" v-model="editModal.task_date" id="task_date">
+            </div>
+
+            <div class="field">
+              <div class="ui pointing below label">
+                Duração
+              </div>
+              <input type="text" v-model="editModal.duration" id="duration">
+            </div>
+
+            <div class="field">
+              <div class="ui pointing below label">
+                Lembrar quantos minutos antes
+              </div>
+              <input type="text" v-model="editModal.remind" id="remind">
+            </div>
+
+            <div class="field">
+              <div class="ui pointing below label">
+                Descrição
+              </div>
+              <input type="text" v-model="editModal.description" id="description">
+            </div>
+          </form>
+        </div>
+
+        <div slot="footer">
+          <center>
+            <button v-on:click="saveEditTask()" id="save-modal" class="ui button">Salvar</button>
+          </center>
+        </div>
+
+      </edit-task-modal>
+    </div>
+
   </div>
 </template>
 
@@ -48,8 +109,9 @@
   import { Mixin } from 'semantic-ui-vue2';
   import NewTaskFast from './NewTaskFast';
   import EditTaskModal from './EditTaskModal';
-
   const moment = require('moment');
+  moment.locale('pt-br');
+
   require('izimodal');
 
   Vue.mixin({
@@ -111,7 +173,15 @@
           editTask: false,
 	  			newTaskFast: false,
           currentTasks: [],
-          datesArray: []
+          datesArray: [],
+          showModal: false,
+          editModal: {
+            name: "",
+            task_date: "",
+            duration: "",
+            remind: "",
+            description: ""
+          }
 	  		}
   	},
     watch: {
@@ -123,20 +193,52 @@
       this.loadCurrentTasks(); //Load all pendent task on page load.
     },
   	methods:{
-      //Show task fields to user add a new task
-      showEditTaskModal : function(){
-        console.log(1);
-        this.editTask = true;
+
+      fillTaskModalFields: function(taskId){
+        const params = {
+          id: taskId
+        };
+
+        const taskInfoPromises = this.GetRequestTask(params);
+        taskInfoPromises.then(function(response){
+          for(var key in response.data[0]){
+            this.$data.editModal[key] = response.data[0][key];
+          }
+        });
       },
 
-      hideEditTaskModal   : function(){
-        this.editTask = false;
+      //Show task fields to user add a new task
+      showEditTaskModal : function(taskId){
+        this.showModal = true;
+        this.fillTaskModalFields(taskId);
+      },
+
+      hideEditTaskModal: function(){
+        this.showModal = false;
       },
 
       //Show task fields to user add a new task
 	    showAddTaskFast : function(){
 	      this.newTaskFast = true;
 	    },
+
+      saveEditTask: function(){
+
+        this.$data.editModal.last_update = moment().format();
+
+        const savedTaskPromises = this.EditTask(this.$data.editModal.id, this.$data.editModal);
+
+        savedTaskPromises.then(function(){
+
+          this.$swal("Tarefa editada com sucesso!", "", "success");
+          this.hideEditTaskModal();
+          this.loadCurrentTasks();
+
+        },function(){
+          this.$swal("Houve um erro enquanto concluia a tarefa.", "", "error");
+        });
+
+      },
 
       completeTask: function(taskId){
         let param = {
@@ -156,7 +258,7 @@
       },
 
       deleteTask: function(taskId){
-        let param = {
+        const param = {
           isOpen: false,
           isRemoved: true,
           last_update: moment().format(),
@@ -164,6 +266,7 @@
         }
 
         let editPromise = this.EditTask(taskId, param);
+
         editPromise.then(function (response) {
           this.$swal("Tarefa removida com sucesso!", "", "success");
           this.loadCurrentTasks(); //Recarrega as tarefas pendentes da página atual
@@ -183,7 +286,7 @@
 <style>
 
 #date-title {
-  border-bottom: 1px solid rgba(34,36,38,.15);
+border-bottom: 1px solid rgba(34,36,38,.15);
   padding-bottom: 5px;
 }
 
