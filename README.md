@@ -1,4 +1,7 @@
+
 # desafio-vitta
+
+CodeClimate badge: <a href="https://codeclimate.com/github/caiogranero/desafio-vitta"><img src="https://codeclimate.com/github/caiogranero/desafio-vitta/badges/gpa.svg" /></a>
 
 to install dependencies: `npm install`
 
