@@ -1,30 +1,24 @@
 <template>
   <div class="content">
-
-  	<ui-grid container v-if="newTaskFast">
-			<i class="close icon" v-on:click="hideAddTaskFast()"></i>
+    <ui-grid container v-if="newTaskFast">
+      <i class="close icon" v-on:click="hideAddTaskFast()"></i>
       <new-task-fast></new-task-fast>
     </ui-grid>
-
     <ui-grid container>
       <ui-row>
         <ui-column class="four wide">
           <h2>{{ msg[$route.params.period] }}</h2>
         </ui-column>
-
         <ui-column class="eleven wide right aligned" id="new-task">
           <i class="plus icon" v-on:click="showAddTaskFast()"></i> Nova tarefa
         </ui-column>
       </ui-row>
-
       <template v-for="(dates, v) in currentTasks">
-
         <ui-row id="date-title">
           <ui-column class="sixteen wide">
             {{v}}
           </ui-column>
         </ui-row>
-
         <ui-row v-for="task in dates" :key="task.id">
           <ui-column class="one wide">
             <i class="checkmark box icon" v-on:click="completeTask(task.id)"></i>
@@ -36,53 +30,46 @@
             <i class="remove icon" v-on:click="deleteTask(task.id)"></i>
           </ui-column>
         </ui-row>
-
-       </template>
-
+      </template>
     </ui-grid>
-
     <!-- Tags above will populate modal component -->
     <div v-if="showModal">
       <edit-task-modal>
         <header slot="header">
           <div class="ui right aligned grid">
             <div class="right floated left aligned two wide column">
-                <i class="large remove icon" v-on:click="hideEditTaskModal()"></i>
+              <i class="large remove icon" v-on:click="hideEditTaskModal()"></i>
             </div>
           </div>
-          <center><h3> Editar tarefa</h3></center>
+          <center>
+            <h3> Editar tarefa</h3></center>
         </header>
-
         <div slot="body">
           <form class="ui fluid form">
             <div class="field">
               <div class="ui pointing below label">
                 Nome da tarefa
               </div>
-              <input type="text" v-model="editModal.name" id="name" >
+              <input type="text" v-model="editModal.name" id="name">
             </div>
-
             <div class="field">
               <div class="ui pointing below label">
                 Data
               </div>
               <input type="text" v-model="editModal.task_date" id="task_date">
             </div>
-
             <div class="field">
               <div class="ui pointing below label">
                 Duração
               </div>
               <input type="text" v-model="editModal.duration" id="duration">
             </div>
-
             <div class="field">
               <div class="ui pointing below label">
                 Lembrar quantos minutos antes
               </div>
               <input type="text" v-model="editModal.remind" id="remind">
             </div>
-
             <div class="field">
               <div class="ui pointing below label">
                 Descrição
@@ -91,18 +78,16 @@
             </div>
           </form>
         </div>
-
         <div slot="footer">
           <center>
             <button v-on:click="saveEditTask()" id="save-modal" class="ui button">Salvar</button>
           </center>
         </div>
-
       </edit-task-modal>
     </div>
-
   </div>
 </template>
+
 
 <script>
   import Vue from 'vue';
@@ -118,13 +103,13 @@
     methods: {
 
       //Load all tasks of current period
-      loadCurrentTasks : function(){
+      loadCurrentTasks: function() {
 
         let params = {
-          isOpen      : true,
+          isOpen: true,
         };
 
-        switch(this.$route.params.period){
+        switch (this.$route.params.period) {
           case "week":
             params.task_week = moment().week().toString();
             break;
@@ -138,109 +123,109 @@
 
         const tasks = this.GetRequestTask(params);
 
-        tasks.then(function(response){
+        tasks.then(function(response) {
 
           this.$data.currentTasks = [];
 
-          this.$data.currentTasks = response.data.reduce(function (r, a) {
-              let task_date_formated = moment(a.task_date).format("DD/MM/YYYY")
+          this.$data.currentTasks = response.data.reduce(function(r, a) {
+            let task_date_formated = moment(a.task_date).format("DD/MM/YYYY");
 
-              r[task_date_formated] = r[task_date_formated] || [];
+            r[task_date_formated] = r[task_date_formated] || [];
 
-              r[task_date_formated].push(a);
+            r[task_date_formated].push(a);
 
-              return r;
+            return r;
           }, Object.create(null));
         });
       }
     }
   });
 
- 	export default {
-  	name: 'Tasks',
-  	components: {
-	    NewTaskFast,
+  export default {
+    name: 'Tasks',
+    components: {
+      NewTaskFast,
       EditTaskModal
-	  },
-  	mixins: [Mixin],
-  	data () {
-	  		return {
-	  			msg: {
-            week: "Semana",
-            today: "Hoje",
-            month: "Esse mês"
-          },
-          editTask: false,
-	  			newTaskFast: false,
-          currentTasks: [],
-          datesArray: [],
-          showModal: false,
-          editModal: {
-            name: "",
-            task_date: "",
-            duration: "",
-            remind: "",
-            description: ""
-          }
-	  		}
-  	},
+    },
+    mixins: [Mixin],
+    data() {
+      return {
+        msg: {
+          week: "Semana",
+          today: "Hoje",
+          month: "Esse mês"
+        },
+        editTask: false,
+        newTaskFast: false,
+        currentTasks: [],
+        datesArray: [],
+        showModal: false,
+        editModal: {
+          name: "",
+          task_date: "",
+          duration: "",
+          remind: "",
+          description: ""
+        }
+      };
+    },
     watch: {
       '$route' () {
         this.loadCurrentTasks(); //Load all pendent task on page load.
       }
     },
-    mounted: function(){
+    mounted: function() {
       this.loadCurrentTasks(); //Load all pendent task on page load.
     },
-  	methods:{
+    methods: {
 
-      fillTaskModalFields: function(taskId){
+      fillTaskModalFields: function(taskId) {
         const params = {
           id: taskId
         };
 
         const taskInfoPromises = this.GetRequestTask(params);
-        taskInfoPromises.then(function(response){
-          for(var key in response.data[0]){
+        taskInfoPromises.then(function(response) {
+          for (var key in response.data[0]) {
             this.$data.editModal[key] = response.data[0][key];
           }
         });
       },
 
       //Show task fields to user add a new task
-      showEditTaskModal : function(taskId){
+      showEditTaskModal: function(taskId) {
         this.showModal = true;
         this.fillTaskModalFields(taskId);
       },
 
-      hideEditTaskModal: function(){
+      hideEditTaskModal: function() {
         this.showModal = false;
       },
 
       //Show task fields to user add a new task
-	    showAddTaskFast : function(){
-	      this.newTaskFast = true;
-	    },
+      showAddTaskFast: function() {
+        this.newTaskFast = true;
+      },
 
-      saveEditTask: function(){
+      saveEditTask: function() {
 
         this.$data.editModal.last_update = moment().format();
 
         const savedTaskPromises = this.EditTask(this.$data.editModal.id, this.$data.editModal);
 
-        savedTaskPromises.then(function(){
+        savedTaskPromises.then(function() {
 
           this.$swal("Tarefa editada com sucesso!", "", "success");
           this.hideEditTaskModal();
           this.loadCurrentTasks();
 
-        },function(){
+        }, function() {
           this.$swal("Houve um erro enquanto concluia a tarefa.", "", "error");
         });
 
       },
 
-      completeTask: function(taskId){
+      completeTask: function(taskId) {
         let param = {
           isOpen: false,
           isComplete: true,
@@ -249,15 +234,15 @@
         }
 
         let editPromise = this.EditTask(taskId, param);
-        editPromise.then(function (response) {
+        editPromise.then(function(response) {
           this.$swal("Tarefa concluída com sucesso!", "", "success");
           this.loadCurrentTasks(); //Recarrega as tarefas pendentes da página atual
-        }, function(){
+        }, function() {
           this.$swal("Houve um erro enquanto concluia a tarefa.", "", "error");
         });
       },
 
-      deleteTask: function(taskId){
+      deleteTask: function(taskId) {
         const param = {
           isOpen: false,
           isRemoved: true,
@@ -267,27 +252,27 @@
 
         let editPromise = this.EditTask(taskId, param);
 
-        editPromise.then(function (response) {
+        editPromise.then(function(response) {
           this.$swal("Tarefa removida com sucesso!", "", "success");
           this.loadCurrentTasks(); //Recarrega as tarefas pendentes da página atual
-        }, function(){
+        }, function() {
           this.$swal("Houve um erro enquanto removia a tarefa.", "", "error");
         });
       },
 
       //Hide task fields.
-	    hideAddTaskFast : function(){
-	      this.newTaskFast = false;
-	    }
-	  }
- 	}
+      hideAddTaskFast: function() {
+        this.newTaskFast = false;
+      }
+    }
+  }
 </script>
 
 <style>
 
-#date-title {
-border-bottom: 1px solid rgba(34,36,38,.15);
-  padding-bottom: 5px;
-}
+  #date-title {
+    border-bottom: 1px solid rgba(34,36,38,.15);
+    padding-bottom: 5px;
+  }
 
 </style>

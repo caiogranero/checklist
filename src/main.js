@@ -1,27 +1,25 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 
-import Hello from './components/Hello.vue'
-import Tasks from './components/Tasks.vue'
-import VueSweetAlert from 'vue-sweetalert'
+import Hello from './components/Hello.vue';
+import Tasks from './components/Tasks.vue';
+import VueSweetAlert from 'vue-sweetalert';
 
 window.Vue = Vue;
 
-const moment = require('moment');
+// const moment = require('moment');
 
-Vue.use(VueSweetAlert)
-Vue.use(VueRouter)
+Vue.use(VueSweetAlert);
+Vue.use(VueRouter);
 Vue.use(VueResource);
 
 const router = new VueRouter({
-	routes: [
-		{path: '/tarefas/:period', component: Tasks, name: 'Tasks'},
-		{path: '/', component: Hello},
-	],
+  routes: [
+    { path: '/tarefas/:period', component: Tasks, name: 'Tasks' },
+    { path: '/', component: Hello },
+  ],
 });
 
 Vue.mixin({
@@ -31,27 +29,27 @@ Vue.mixin({
       const currentUserId = 1;
       let filter = "";
 
-      for(var key in params){
-        filter += key + "=" + params[key] + "&"
+      for (var key in params) {
+        filter += key + "=" + params[key] + "&";
       }
 
       filter = filter.slice(0, -1);
 
-      return this.$http.get('http://localhost:3000/users/'+currentUserId+'/tasks?'+filter);
+      return this.$http.get('http://localhost:3000/users/' + currentUserId + '/tasks?' + filter);
     },
 
-    EditTask: function(idTask, newParams){
-      return this.$http.get('http://localhost:3000/tasks/'+idTask).then(function(response){
+    EditTask: function(idTask, newParams) {
+      return this.$http.get('http://localhost:3000/tasks/' + idTask).then(function(response) {
 
         let db = response.data;
 
-        for(var key in newParams){
-          if(db[key] != newParams[key]){
+        for (var key in newParams) {
+          if (db[key] != newParams[key]) {
             db[key] = newParams[key];
           }
         }
 
-        return this.$http.put('http://localhost:3000/tasks/'+idTask, JSON.stringify(db));
+        return this.$http.put('http://localhost:3000/tasks/' + idTask, JSON.stringify(db));
       });
     }
   }
@@ -60,14 +58,14 @@ Vue.mixin({
 let vm = new Vue({
   el: '#app',
   router,
-  data () {
-      return {
-        xpto: {
-          isOpen: false,
-          isComplete: true,
-          isRemoved: false
-        }
+  data() {
+    return {
+      xpto: {
+        isOpen: false,
+        isComplete: true,
+        isRemoved: false
       }
+    };
   },
   template: '<App/>',
   components: { App }

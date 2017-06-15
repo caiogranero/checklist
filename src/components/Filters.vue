@@ -2,41 +2,46 @@
   <div id="filter">
     <div class="item">
       <div class="ui toggle checkbox">
-        <input type="checkbox" name="isOpen" v-model="filterFields.isOpen" v-on:click="setFilter()" id="isOpen" checked > <label>Pendente</label>
+        <input type="checkbox" name="isOpen" v-model="filterFields.isOpen" v-on:click="setFilter()" id="isOpen" checked>
+        <label>Pendente</label>
       </div>
     </div>
     <div class="item">
       <div class="ui toggle checkbox">
-        <input type="checkbox" name="isComplete" v-model="filterFields.isComplete" v-on:click="setFilter()" id="isComplete"> <label>Concluído</label>
+        <input type="checkbox" name="isComplete" v-model="filterFields.isComplete" v-on:click="setFilter()" id="isComplete">
+        <label>Concluído</label>
       </div>
     </div>
     <div class="item">
       <div class="ui toggle checkbox">
-        <input type="checkbox" name="isRemoved" v-model="filterFields.isRemoved" v-on:click="setFilter()" id="isRemoved"> <label>Cancelado</label>
+        <input type="checkbox" name="isRemoved" v-model="filterFields.isRemoved" v-on:click="setFilter()" id="isRemoved">
+        <label>Cancelado</label>
       </div>
     </div>
   </div>
 </template>
 
+
 <script>
 
 export default {
   name: 'Filters',
-  data () {
-      return {
-        filterFields: {
-          isOpen: true,
-          isComplete: false,
-          isRemoved: false
-        }
+  data() {
+    return {
+      filterFields: {
+        isOpen: true,
+        isComplete: false,
+        isRemoved: false
       }
+    };
   },
-  methods:{
-    setFilter: function(){
+  methods: {
+    setFilter: function() {
       console.log(this);
     }
   }
-}
+};
+
 
 </script>
 

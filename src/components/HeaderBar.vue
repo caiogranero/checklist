@@ -3,7 +3,7 @@
     <ui-grid container>
       <ui-row>
         <div class="item">
-           <router-link id="logo" :to="'/'" tag="img" :src="require('../assets/logo.png')"></router-link>
+          <router-link id="logo" :to="'/'" tag="img" :src="require('../assets/logo.png')"></router-link>
         </div>
         <div class="right menu">
           <a class="item"><i class="large add to calendar icon"></i></a>
@@ -16,20 +16,21 @@
   </div>
 </template>
 
+
 <script>
 
-import { Mixin } from 'semantic-ui-vue2';
+  import { Mixin } from 'semantic-ui-vue2';
 
-export default {
-  mixins: [Mixin]
-};
+  export default {
+    mixins: [Mixin]
+  };
 
 </script>
 
 <style>
 
-#logo {
-  cursor: pointer;
-}
+  #logo {
+    cursor: pointer;
+  }
 
 </style>
