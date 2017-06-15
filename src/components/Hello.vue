@@ -15,6 +15,7 @@
 
 <script>
 
+import Vue from 'vue';
 import { Mixin } from 'semantic-ui-vue2';
 
 const $ = require('jquery');
@@ -28,9 +29,5 @@ export default {
     };
   },
 };
-
-$('.column').click(function(){
-
-});
 
 </script>
