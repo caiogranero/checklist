@@ -3,7 +3,7 @@
     <div class="header">
       <header-bar></header-bar>
     </div>
-     <ui-grid container id="main">
+    <ui-grid container id="main">
       <ui-row>
         <ui-column class="four wide" id="side-bar-column">
           <side-bar></side-bar>
@@ -13,14 +13,19 @@
         </ui-column>
       </ui-row>
     </ui-grid>
+    <footer>
+      <center>
+        <p> <i class="trophy icon"></i> Made by <a target="_blank" href="https://github.com/caiogranero">caiogranero</a></p>
+      </center>
+    </footer>
   </div>
 </template>
 
 <script>
 
 import { Mixin } from 'semantic-ui-vue2';
-import HeaderBar from './components/HeaderBar'
-import SideBar from './components/SideBar'
+import HeaderBar from './components/HeaderBar';
+import SideBar from './components/SideBar';
 
 export default {
   name: 'app',
@@ -49,6 +54,18 @@ i:hover, a > i:hover {
 
 i {
   cursor: pointer;
+}
+
+html, body{
+  height: 100%
+}
+
+footer {
+  position:fixed;
+  bottom:50px;
+  width:100%;
+  height:10px;
+  font: 12px;
 }
 
 </style>

@@ -17,89 +17,103 @@
     <a class="item" v-on:click="showTasks('month')">
       <div class="ui small label">{{sidebar.qttMonth}}</div> Neste mês
     </a>
-
     <div class="ui divider"></div>
-
     <filters></filters>
   </div>
 </template>
 
+
 <script>
 
-import Filters from './Filters';
-const moment = require('moment');
+  import Filters from './Filters';
+  const moment = require('moment');
 
-export default {
-  name: 'SideBar',
-  data () {
-    return {
-      sidebar: {
-        qttToday: null,
-        qttWeek: null,
-        qttMonth: null
-      }
-    }
-  },
-  components: {
-    Filters,
-  },
-  mounted: function(){
-    this.getQttMonth();
-    this.getQttWeek();
-    this.getQttToday();
-  },
-  methods:{
-    showTasks : function(period){
-      this.$router.push({
-        name: 'Tasks', params: {
-          period: period
+  export default {
+    name: 'SideBar',
+    data() {
+      return {
+        sidebar: {
+          qttToday: null,
+          qttWeek: null,
+          qttMonth: null
         }
-      });
+      };
     },
-
-    getQttMonth: function(){
-
-      let params = {
-        isOpen: true,
-        task_month: moment().month().toString()
-      }
-
-      const tasks = this.GetRequestTask(params);
-
-      tasks.then(function(response){
-        this.sidebar.qttMonth = response.data.length;
-      });
+    components: {
+      Filters
     },
-
-    getQttToday: function(){
-
-      let params = {
-        isOpen: true,
-        task_date: moment().startOf('day').format()
+    watch: {
+      '$route' () {
+        this.getQttMonth();
+        this.getQttWeek();
+        this.getQttToday();
       }
-
-      const tasks = this.GetRequestTask(params);
-
-      tasks.then(function(response){
-        this.sidebar.qttToday = response.data.length;
-      });
     },
+    mounted: function() {
+      this.getQttMonth();
+      this.getQttWeek();
+      this.getQttToday();
+    },
+    methods: {
+      showTasks: function(period) {
+        this.$router.push({
+          name: 'Tasks',
+          params: {
+            period: period
+          }
+        });
+      },
 
-    getQttWeek: function(){
+      // Count the qtt of task in current month, based on filters and insert in sidebar
+      getQttMonth: function() {
 
-      let params = {
-        isOpen: true,
-        task_week: moment().week().toString()
+        let params = {
+          task_month: moment().month().toString()
+        };
+
+        params[this.$root.$data.filter] = true;
+
+        const tasks = this.GetRequestTask(params);
+
+        tasks.then(function(response) {
+          this.sidebar.qttMonth = response.data.length;
+        });
+      },
+
+      // Count the qtt of task in current day, based on filters and insert in sidebar
+      getQttToday: function() {
+
+        let params = {
+          task_date: moment().startOf('day').format()
+        };
+
+        params[this.$root.$data.filter] = true;
+
+        const tasks = this.GetRequestTask(params);
+
+        tasks.then(function(response) {
+          this.sidebar.qttToday = response.data.length;
+        });
+      },
+
+      // Count the qtt of task in current week, based on filters and insert in sidebar
+      getQttWeek: function() {
+
+        let params = {
+          task_week: moment().week().toString()
+        };
+
+        params[this.$root.$data.filter] = true;
+
+        const tasks = this.GetRequestTask(params);
+
+        tasks.then(function(response) {
+          this.sidebar.qttWeek = response.data.length;
+        });
       }
-
-      const tasks = this.GetRequestTask(params);
-
-      tasks.then(function(response){
-        this.sidebar.qttWeek = response.data.length;
-      });
     }
-  }
-}
+  };
+
 
 </script>
 

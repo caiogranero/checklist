@@ -11,8 +11,8 @@
     {
       "userId": 1,
       "id": 1,
-      "name": "Tarefa 213",
-      "description": "Descrição da tarefa 21",
+      "name": "Eddard Stark Task",
+      "description": "He who passes the sentence, must swing the sword.",
       "created_at": "2017-06-1203:00:00.000Z",
       "task_date": "2017-06-12T03:00:00.000Z",
       "duration": "5",
@@ -26,7 +26,8 @@
       "ended_at": "2017-06-15T18:10:43-04:00"
     },
     {
-      "name": "Descrição do Caio",
+      "name": "Jamie Lannister Task",
+      "description": "It's a shame the throne isn't made out of cocks, they'd have never got him off it.",
       "task_date": "2017-06-20T03:00:00.000Z",
       "task_week": 25,
       "task_month": 5,
@@ -40,31 +41,52 @@
       "ended_at": "2017-06-13T18:25:49-03:00"
     },
     {
-      "name": "Tarefa legalzona 2.1",
+      "name": "Cersei Lannister Task",
       "task_date": "2017-06-15T00:00:00-04:00",
       "task_week": 24,
       "task_month": 5,
-      "last_update": "2017-06-15T18:12:42-04:00",
+      "last_update": "2017-06-15T20:35:27-04:00",
       "created_at": "2017-06-15T22:11:02.579Z",
       "userId": "1",
-      "isRemoved": false,
-      "isOpen": true,
+      "isRemoved": true,
+      "isOpen": false,
+      "isComplete": false,
       "id": 3,
       "duration": "",
       "remind": "",
-      "description": ""
+      "description": "When you play the game of thrones, you win or you die.",
+      "ended_at": "2017-06-15T20:35:27-04:00"
     },
     {
-      "name": "Tarefa 1.0",
+      "name": "Albus Dumbledore Task",
       "task_date": "2017-06-15T00:00:00-04:00",
       "task_week": 24,
       "task_month": 5,
-      "last_update": "2017-06-15T18:12:58-04:00",
-      "created_at": "2017-06-15T18:12:58-04:00",
+      "last_update": "2017-06-15T21:25:37-04:00",
+      "created_at": "2017-06-15T20:36:12-04:00",
+      "userId": "1",
+      "isRemoved": true,
+      "isOpen": false,
+      "isCompleted": false,
+      "id": 6,
+      "duration": "",
+      "remind": "",
+      "description": "Indifference and neglect often do much more damage than outright dislike.",
+      "ended_at": "2017-06-15T21:25:37-04:00"
+    },
+    {
+      "name": "Tywin Lannister Task",
+      "task_date": "2017-06-22T00:00:00-04:00",
+      "task_week": 25,
+      "task_month": 5,
+      "last_update": "2017-06-15T20:46:07-04:00",
+      "created_at": "2017-06-15T20:46:07-04:00",
       "userId": "1",
       "isRemoved": false,
       "isOpen": true,
-      "id": 4
+      "isCompleted": false,
+      "id": 8,
+      "description": "it's the family name that lives on. It's all that lives on. Not your personal glory, not your honor... but family."
     }
   ]
 }
