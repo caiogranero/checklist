@@ -8,7 +8,8 @@
 			        <input type="text" name="name" id="name" v-model="name" placeholder="Descrição da tarefa">
 			      </div>
 			      <div class="four wide field">
-			        <input type="text" name="date" id="date" placeholder="Data" v-model="date">
+              <datepicker name="date" id="date" placeholder="Data" v-model="date" language="pt-br" format="dd/MM/yyyy"></datepicker>
+			        <!-- <input type="input" > -->
 			      </div>
 			      <input type="button" v-on:click="newTask()" class="ui button" value="Adicionar tarefa">
 			    </div>
@@ -22,13 +23,15 @@
 
   import { Mixin } from 'semantic-ui-vue2';
   import Tasks from './Tasks';
+  import Datepicker from 'vuejs-datepicker';
 
   const moment = require('moment');
 
   export default {
     name: 'NewTaskFast',
     components: {
-      Tasks
+      Tasks,
+      Datepicker
     },
     mixins: [Mixin],
     data() {
@@ -51,7 +54,8 @@
           created_at: moment().format(),
           userId: 1,
           isRemoved: false,
-          isOpen: true
+          isOpen: true,
+          isCompleted:false
         };
 
         this.$http.post('http://localhost:3000/users/1/tasks', JSON.stringify(data)).then(function(response) {

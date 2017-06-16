@@ -42,6 +42,13 @@
     components: {
       Filters
     },
+    watch: {
+      '$route' () {
+        this.getQttMonth();
+        this.getQttWeek();
+        this.getQttToday();
+      }
+    },
     mounted: function() {
       this.getQttMonth();
       this.getQttWeek();
@@ -60,9 +67,10 @@
       getQttMonth: function() {
 
         let params = {
-          isOpen: true,
           task_month: moment().month().toString()
         };
+
+        params[this.$root.$data.filter] = true;
 
         const tasks = this.GetRequestTask(params);
 
@@ -74,9 +82,10 @@
       getQttToday: function() {
 
         let params = {
-          isOpen: true,
           task_date: moment().startOf('day').format()
         };
+
+        params[this.$root.$data.filter] = true;
 
         const tasks = this.GetRequestTask(params);
 
@@ -88,9 +97,10 @@
       getQttWeek: function() {
 
         let params = {
-          isOpen: true,
           task_week: moment().week().toString()
         };
+
+        params[this.$root.$data.filter] = true;
 
         const tasks = this.GetRequestTask(params);
 

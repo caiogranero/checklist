@@ -1,9 +1,13 @@
 <template>
   <div class="content">
+
+    <!-- Tags above will show when click to add a new task -->
     <ui-grid container v-if="newTaskFast">
       <i class="close icon" v-on:click="hideAddTaskFast()"></i>
       <new-task-fast></new-task-fast>
     </ui-grid>
+
+    <!-- Tags above will populate the task content -->
     <ui-grid container>
       <ui-row>
         <ui-column class="four wide">
@@ -23,7 +27,7 @@
           <ui-column class="one wide">
             <i class="checkmark box icon" v-on:click="completeTask(task.id)"></i>
           </ui-column>
-          <ui-column class="fourteen wide">
+          <ui-column class="fourteen wide edit-task">
             <p v-on:click="showEditTaskModal(task.id)">{{task.name}}</p>
           </ui-column>
           <ui-column class="one wide">
@@ -32,7 +36,9 @@
         </ui-row>
       </template>
     </ui-grid>
+
     <!-- Tags above will populate modal component -->
+
     <div v-if="showModal">
       <edit-task-modal>
         <header slot="header">
@@ -56,7 +62,7 @@
               <div class="ui pointing below label">
                 Data
               </div>
-              <input type="text" v-model="editModal.task_date" id="task_date">
+              <datepicker placeholder="Data" v-model="editModal.task_date" id="task_date" language="pt-br" format="dd/MM/yyyy"></datepicker>
             </div>
             <div class="field">
               <div class="ui pointing below label">
@@ -93,6 +99,7 @@
   import Vue from 'vue';
   import { Mixin } from 'semantic-ui-vue2';
   import NewTaskFast from './NewTaskFast';
+  import Datepicker from 'vuejs-datepicker';
   import EditTaskModal from './EditTaskModal';
   const moment = require('moment');
   moment.locale('pt-br');
@@ -101,13 +108,12 @@
 
   Vue.mixin({
     methods: {
-
       //Load all tasks of current period
       loadCurrentTasks: function() {
 
-        let params = {
-          isOpen: true,
-        };
+        let params = {};
+
+        params[this.$root.$data.filter] = true;
 
         switch (this.$route.params.period) {
           case "week":
@@ -145,7 +151,8 @@
     name: 'Tasks',
     components: {
       NewTaskFast,
-      EditTaskModal
+      EditTaskModal,
+      Datepicker
     },
     mixins: [Mixin],
     data() {
@@ -171,7 +178,7 @@
     },
     watch: {
       '$route' () {
-        this.loadCurrentTasks(); //Load all pendent task on page load.
+        this.loadCurrentTasks(); //Load all pendent task when change period.
       }
     },
     mounted: function() {
@@ -209,6 +216,7 @@
 
       saveEditTask: function() {
 
+        this.$data.editModal.task_date = moment(this.$data.editModal.task_date, "DD/MM/YYYY").startOf('day').format();
         this.$data.editModal.last_update = moment().format();
 
         const savedTaskPromises = this.EditTask(this.$data.editModal.id, this.$data.editModal);
@@ -275,4 +283,11 @@
     padding-bottom: 5px;
   }
 
+  .edit-task {
+    cursor: pointer;
+  }
+
+  .edit-task:hover {
+    color: #E04F5F;
+  }
 </style>

@@ -2,14 +2,10 @@ import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
-
-import Hello from './components/Hello.vue';
 import Tasks from './components/Tasks.vue';
 import VueSweetAlert from 'vue-sweetalert';
 
 window.Vue = Vue;
-
-// const moment = require('moment');
 
 Vue.use(VueSweetAlert);
 Vue.use(VueRouter);
@@ -18,7 +14,7 @@ Vue.use(VueResource);
 const router = new VueRouter({
   routes: [
     { path: '/tarefas/:period', component: Tasks, name: 'Tasks' },
-    { path: '/', component: Hello },
+    { path: '/', redirect: '/tarefas/week' },
   ],
 });
 
@@ -60,11 +56,7 @@ let vm = new Vue({
   router,
   data() {
     return {
-      xpto: {
-        isOpen: false,
-        isComplete: true,
-        isRemoved: false
-      }
+      filter: 'isOpen'
     };
   },
   template: '<App/>',
