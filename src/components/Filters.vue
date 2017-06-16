@@ -32,6 +32,8 @@
       };
     },
     methods: {
+
+      // Define o novo valor do filtro globalmente.
       setFilter: function() {
         this.$root.$data.filter = this.filterFields;
         this.loadCurrentTasks();

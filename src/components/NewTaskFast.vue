@@ -41,6 +41,8 @@
       };
     },
     methods: {
+
+      // Insert a new task in DB, based in name and date values inserted.
       newTask: function() {
 
         moment.locale('pt-br');

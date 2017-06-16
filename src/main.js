@@ -34,6 +34,8 @@ Vue.mixin({
       return this.$http.get('http://localhost:3000/users/' + currentUserId + '/tasks?' + filter);
     },
 
+    // Use this when you want to edit a task.
+    // Just send the idTask and all new infos about that task.
     EditTask: function(idTask, newParams) {
       return this.$http.get('http://localhost:3000/tasks/' + idTask).then(function(response) {
 

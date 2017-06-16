@@ -64,6 +64,7 @@
         });
       },
 
+      // Count the qtt of task in current month, based on filters and insert in sidebar
       getQttMonth: function() {
 
         let params = {
@@ -79,6 +80,7 @@
         });
       },
 
+      // Count the qtt of task in current day, based on filters and insert in sidebar
       getQttToday: function() {
 
         let params = {
@@ -94,6 +96,7 @@
         });
       },
 
+      // Count the qtt of task in current week, based on filters and insert in sidebar
       getQttWeek: function() {
 
         let params = {

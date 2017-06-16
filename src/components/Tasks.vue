@@ -186,6 +186,7 @@
     },
     methods: {
 
+      // This fill all fiels in model with there respective task values
       fillTaskModalFields: function(taskId) {
         const params = {
           id: taskId
@@ -199,12 +200,13 @@
         });
       },
 
-      //Show task fields to user add a new task
+      //Show current task fields modal for enable user to edit some infos.
       showEditTaskModal: function(taskId) {
         this.showModal = true;
         this.fillTaskModalFields(taskId);
       },
 
+      // Just hide the modal
       hideEditTaskModal: function() {
         this.showModal = false;
       },
@@ -214,6 +216,7 @@
         this.newTaskFast = true;
       },
 
+      // Save in db all new values of a task
       saveEditTask: function() {
 
         this.$data.editModal.task_date = moment(this.$data.editModal.task_date, "DD/MM/YYYY").startOf('day').format();
@@ -233,6 +236,7 @@
 
       },
 
+      // Complete a task
       completeTask: function(taskId) {
         let param = {
           isOpen: false,
@@ -250,6 +254,7 @@
         });
       },
 
+      // Delete a task
       deleteTask: function(taskId) {
         const param = {
           isOpen: false,
