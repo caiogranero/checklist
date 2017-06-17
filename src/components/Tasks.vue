@@ -68,13 +68,13 @@
               <div class="ui pointing below label">
                 Duração
               </div>
-              <input type="text" v-model="editModal.duration" id="duration">
+              <input type="number" v-model="editModal.duration" step="5" min="0" id="duration" v-on:change="multipleFive">
             </div>
             <div class="field">
               <div class="ui pointing below label">
                 Lembrar quantos minutos antes
               </div>
-              <input type="text" v-model="editModal.remind" id="remind">
+              <input type="number" v-model="editModal.remind" step="5" min="0" id="remind" v-on:change="multipleFive">
             </div>
             <div class="field">
               <div class="ui pointing below label">
@@ -185,6 +185,11 @@
       this.loadCurrentTasks(); //Load all pendent task on page load.
     },
     methods: {
+
+      // Limit modal fields to have just multiple five numbers.
+      multipleFive: function(e){
+        this.editModal[e.srcElement.id] = parseInt(Math.round(e.target.value/5)*5);
+      },
 
       // This fill all fiels in model with there respective task values
       fillTaskModalFields: function(taskId) {
