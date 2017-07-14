@@ -1,4 +1,4 @@
-# desafio-vitta
+# checklist
 
 CodeClimate badge: [![codeclimate](https://codeclimate.com/github/caiogranero/desafio-vitta/badges/gpa.svg)](https://codeclimate.com/github/caiogranero/desafio-vitta)
 
