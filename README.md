@@ -1,6 +1,6 @@
 # checklist
 
-CodeClimate badge: [![codeclimate](https://codeclimate.com/github/caiogranero/desafio-vitta/badges/gpa.svg)](https://codeclimate.com/github/caiogranero/desafio-vitta)
+CodeClimate badge: [![codeclimate](https://codeclimate.com/github/caiogranero/checklist/badges/gpa.svg)](https://codeclimate.com/github/caiogranero/checklist)
 
 ### What's this?
 
