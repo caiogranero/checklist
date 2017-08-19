@@ -6,16 +6,9 @@
         <i class="search icon"></i>
       </div>
     </a>
-    <a class="item" v-on:click="showTasks('today')">
-      <div class="ui small label">{{sidebar.qttToday}}</div>
-      <i class="large calendar outline icon"></i> Hoje
-    </a>
-    <a class="item" v-on:click="showTasks('week')">
-      <div class="ui small teal label">{{sidebar.qttWeek}}</div>
-      <i class="large calendar icon"></i> Próximos 7 dias
-    </a>
-    <a class="item" v-on:click="showTasks('month')">
-      <div class="ui small label">{{sidebar.qttMonth}}</div> Neste mês
+    <a class="item" v-on:click="showTasks(option.route)" v-for="option in options" :key="option.route">
+      <div class="ui small label">{{option.qtt}}</div>
+      <i :class="option.icon"></i> {{option.label}}
     </a>
     <div class="ui divider"></div>
     <filters></filters>
@@ -25,6 +18,8 @@
 
 <script>
 
+// TODO: Make search work
+
 import Filters from './Filters'
 import mixins from './mixins'
 
@@ -32,11 +27,26 @@ export default {
   name: 'SideBar',
   data() {
     return {
-      sidebar: {
-        qttToday: null,
-        qttWeek: null,
-        qttMonth: null
-      }
+      options: [
+        {
+          qtt: 0,
+          label: 'Hoje',
+          route: 'today',
+          icon: 'large calendar outline icon'
+        },
+        {
+          qtt: 0,
+          label: 'Próximos 7 dias',
+          route: 'week',
+          icon: 'large calendar icon'
+        },
+        {
+          qtt: 0,
+          label: 'Neste mês',
+          route: 'month',
+          icon: 'large calendar icon'
+        }
+      ]
     }
   },
   mixins: [mixins],
@@ -44,16 +54,12 @@ export default {
     Filters
   },
   watch: {
-    '$route' () {
-      this.getQttMonth()
-      this.getQttWeek()
-      this.getQttToday()
+    '$route' () { //Every time the route change, calculate qtt task
+      this.calcQttTask()
     }
   },
-  mounted: function() {
-    this.getQttMonth()
-    this.getQttWeek()
-    this.getQttToday()
+  created: function() {
+    this.calcQttTask()
   },
   methods: {
     showTasks (period) {
@@ -65,8 +71,9 @@ export default {
       })
     },
 
-    // Count the qtt of task in current month, based on filters and insert in sidebar
-    getQttMonth () {
+    // TODO: Need to calculate per period
+    // Count the qtt of task per period, based on filters and insert in sidebar
+    calcQttTask () {
 
       let params = {
       }
@@ -76,37 +83,9 @@ export default {
       const tasks = this.GetRequestTask(params)
 
       tasks.then((response) => {
-        this.sidebar.qttMonth = response.data.length
-      })
-    },
-
-    // Count the qtt of task in current day, based on filters and insert in sidebar
-    getQttToday () {
-
-      let params = {
-      }
-
-      params[this.$store.state.filter] = true
-
-      const tasks = this.GetRequestTask(params)
-
-      tasks.then((response) => {
-        this.sidebar.qttToday = response.data.length
-      })
-    },
-
-    // Count the qtt of task in current week, based on filters and insert in sidebar
-    getQttWeek () {
-
-      let params = {
-      }
-
-      params[this.$store.state.filter] = true
-
-      const tasks = this.GetRequestTask(params)
-
-      tasks.then((response) => {
-        this.sidebar.qttWeek = response.data.length
+        this.options[0].qtt = response.data.length
+        this.options[1].qtt = response.data.length
+        this.options[2].qtt = response.data.length
       })
     }
   }
