@@ -67,7 +67,7 @@ export default {
         const taskData = Object.assign(this.taskDataDefault, currentTask);
         
         this.$http.post('http://localhost:3000/users/1/tasks', JSON.stringify(taskData)).then((response) => {
-          this.$parent.$parent.loadCurrentTasks()
+          this.loadCurrentTasks()
           this.name = ''
           this.date = ''
           this.$swal("Tarefa criada com sucesso!", "", "success");
