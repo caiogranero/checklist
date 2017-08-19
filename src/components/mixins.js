@@ -60,6 +60,7 @@ const mixins = {
         }, Object.create(null));
       });
     },
+
     // Make a GET request and return a promise
     GetRequestTask(params) {
       const currentUserId = 1;
@@ -68,7 +69,6 @@ const mixins = {
       Object.keys(params).forEach((key) => {
         filter += `${key}=${params[key]}&`;
       });
-
 
       filter = filter.slice(0, -1);
 
