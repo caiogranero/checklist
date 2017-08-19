@@ -25,7 +25,7 @@
 
 import { Mixin } from 'semantic-ui-vue2';
 import HeaderBar from './components/HeaderBar';
-import SideBar from './components/SideBar';
+import SideBar from './components/Sidebar/SideBar';
 
 export default {
   name: 'app',

@@ -1,30 +1,17 @@
 <template>
-  <div class="ui small vertical menu" id="side-bar">
-    <a class="item">
-      <div class="ui icon input">
-        <input type="text" placeholder="Encontrar tarefa">
-        <i class="search icon"></i>
-      </div>
-    </a>
+  <div id="period-filter">
     <a class="item" v-on:click="showTasks(option.route)" v-for="option in options" :key="option.route">
       <div class="ui small label">{{option.qtt}}</div>
       <i :class="option.icon"></i> {{option.label}}
     </a>
-    <div class="ui divider"></div>
-    <filters></filters>
   </div>
 </template>
 
-
 <script>
-
-// TODO: Make search work
-
-import Filters from './Filters'
-import mixins from './mixins'
+import mixins from '@/components/mixins'
 
 export default {
-  name: 'SideBar',
+  name: 'PeriodFilter',
   data() {
     return {
       options: [
@@ -50,9 +37,6 @@ export default {
     }
   },
   mixins: [mixins],
-  components: {
-    Filters
-  },
   watch: {
     '$route' () { //Every time the route change, calculate qtt task
       this.calcQttTask()
@@ -70,7 +54,6 @@ export default {
         }
       })
     },
-
     // TODO: Need to calculate per period
     // Count the qtt of task per period, based on filters and insert in sidebar
     calcQttTask () {
@@ -98,14 +81,6 @@ export default {
 <style>
   .ui.vertical.menu .item:before, .ui.menu .item:before {
       background: #FFF;
-  }
-
-  #side-bar {
-    text-align: left;
-    background: #FFF;
-    height: 100%;
-    border: none;
-    box-shadow: none;
   }
 
   .ui.small.vertical.menu {

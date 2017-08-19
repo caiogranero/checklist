@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import mixins from './mixins'
+import mixins from '@/components/mixins'
 
 export default {
-  name: 'Filters',
+  name: 'StatusFilter',
   mixins: [mixins],
   data() {
     return {
@@ -45,13 +45,12 @@ export default {
   },
   
   methods: {
-
     // Set new filter value in state and load all tasks
     setFilter(filter) {
       this.$store.commit('setFilter', filter)
       this.loadCurrentTasks()
     }
-  }
+  },
 }
 
 </script>
