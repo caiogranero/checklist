@@ -5,8 +5,20 @@ moment.locale('pt-br');
 
 const mixins = {
   data() {
-
+    return {
+      taskDataDefault: {
+        task_date: this.moment().startOf('day'),
+        task_week: this.moment().week(),
+        task_month: this.moment().month(),
+        last_update: this.moment().format(),
+        created_at: this.moment().format(),
+        isRemoved: false,
+        isOpen: false,
+        isCompleted: false,
+      },
+    };
   },
+
   methods: {
     moment(param) {
       return moment(param);
