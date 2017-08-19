@@ -25,94 +25,92 @@
 
 <script>
 
-  import Filters from './Filters';
-  const moment = require('moment');
+import Filters from './Filters'
+import mixins from './mixins'
 
-  export default {
-    name: 'SideBar',
-    data() {
-      return {
-        sidebar: {
-          qttToday: null,
-          qttWeek: null,
-          qttMonth: null
-        }
-      };
-    },
-    components: {
-      Filters
-    },
-    watch: {
-      '$route' () {
-        this.getQttMonth();
-        this.getQttWeek();
-        this.getQttToday();
-      }
-    },
-    mounted: function() {
-      this.getQttMonth();
-      this.getQttWeek();
-      this.getQttToday();
-    },
-    methods: {
-      showTasks: function(period) {
-        this.$router.push({
-          name: 'Tasks',
-          params: {
-            period: period
-          }
-        });
-      },
-
-      // Count the qtt of task in current month, based on filters and insert in sidebar
-      getQttMonth: function() {
-
-        let params = {
-          task_month: moment().month().toString()
-        };
-
-        params[this.$root.$data.filter] = true;
-
-        const tasks = this.GetRequestTask(params);
-
-        tasks.then(function(response) {
-          this.sidebar.qttMonth = response.data.length;
-        });
-      },
-
-      // Count the qtt of task in current day, based on filters and insert in sidebar
-      getQttToday: function() {
-
-        let params = {
-          task_date: moment().startOf('day').format()
-        };
-
-        params[this.$root.$data.filter] = true;
-
-        const tasks = this.GetRequestTask(params);
-
-        tasks.then(function(response) {
-          this.sidebar.qttToday = response.data.length;
-        });
-      },
-
-      // Count the qtt of task in current week, based on filters and insert in sidebar
-      getQttWeek: function() {
-
-        let params = {
-          task_week: moment().week().toString()
-        };
-
-        params[this.$root.$data.filter] = true;
-
-        const tasks = this.GetRequestTask(params);
-
-        tasks.then(function(response) {
-          this.sidebar.qttWeek = response.data.length;
-        });
+export default {
+  name: 'SideBar',
+  data() {
+    return {
+      sidebar: {
+        qttToday: null,
+        qttWeek: null,
+        qttMonth: null
       }
     }
-  };
+  },
+  mixins: [mixins],
+  components: {
+    Filters
+  },
+  watch: {
+    '$route' () {
+      this.getQttMonth()
+      this.getQttWeek()
+      this.getQttToday()
+    }
+  },
+  mounted: function() {
+    this.getQttMonth()
+    this.getQttWeek()
+    this.getQttToday()
+  },
+  methods: {
+    showTasks (period) {
+      this.$router.push({
+        name: 'Tasks',
+        params: {
+          period: period
+        }
+      })
+    },
+
+    // Count the qtt of task in current month, based on filters and insert in sidebar
+    getQttMonth () {
+
+      let params = {
+      }
+
+      params[this.$store.state.filter] = true
+
+      const tasks = this.GetRequestTask(params)
+
+      tasks.then((response) => {
+        this.sidebar.qttMonth = response.data.length
+      })
+    },
+
+    // Count the qtt of task in current day, based on filters and insert in sidebar
+    getQttToday () {
+
+      let params = {
+      }
+
+      params[this.$store.state.filter] = true
+
+      const tasks = this.GetRequestTask(params)
+
+      tasks.then((response) => {
+        this.sidebar.qttToday = response.data.length
+      })
+    },
+
+    // Count the qtt of task in current week, based on filters and insert in sidebar
+    getQttWeek () {
+
+      let params = {
+      }
+
+      params[this.$store.state.filter] = true
+
+      const tasks = this.GetRequestTask(params)
+
+      tasks.then((response) => {
+        this.sidebar.qttWeek = response.data.length
+      })
+    }
+  }
+}
 
 
 </script>

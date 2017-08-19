@@ -97,55 +97,12 @@
 
 <script>
   import Vue from 'vue';
+  import mixins from './mixins'
   import { Mixin } from 'semantic-ui-vue2';
   import NewTaskFast from './NewTaskFast';
   import Datepicker from 'vuejs-datepicker';
   import EditTaskModal from './EditTaskModal';
-  const moment = require('moment');
-  moment.locale('pt-br');
-
   require('izimodal');
-
-  Vue.mixin({
-    methods: {
-      //Load all tasks of current period
-      loadCurrentTasks: function() {
-
-        let params = {};
-
-        params[this.$root.$data.filter] = true;
-
-        switch (this.$route.params.period) {
-          case "week":
-            params.task_week = moment().week().toString();
-            break;
-          case "today":
-            params.task_date = moment().startOf('day').format();
-            break;
-          case "month":
-            params.task_month = moment().month().toString();
-            break;
-        }
-
-        const tasks = this.GetRequestTask(params);
-
-        tasks.then(function(response) {
-
-          this.$data.currentTasks = [];
-
-          this.$data.currentTasks = response.data.reduce(function(r, a) {
-            let task_date_formated = moment(a.task_date).format("DD/MM/YYYY");
-
-            r[task_date_formated] = r[task_date_formated] || [];
-
-            r[task_date_formated].push(a);
-
-            return r;
-          }, Object.create(null));
-        });
-      }
-    }
-  });
 
   export default {
     name: 'Tasks',
@@ -154,7 +111,7 @@
       EditTaskModal,
       Datepicker
     },
-    mixins: [Mixin],
+    mixins: [Mixin, mixins],
     data() {
       return {
         msg: {
@@ -181,18 +138,20 @@
         this.loadCurrentTasks(); //Load all pendent task when change period.
       }
     },
-    mounted: function() {
+
+    mounted() {
       this.loadCurrentTasks(); //Load all pendent task on page load.
     },
+
     methods: {
 
       // Limit modal fields to have just multiple five numbers.
-      multipleFive: function(e){
+      multipleFive(e){
         this.editModal[e.srcElement.id] = parseInt(Math.round(e.target.value/5)*5);
       },
 
       // This fill all fiels in model with there respective task values
-      fillTaskModalFields: function(taskId) {
+      fillTaskModalFields(taskId) {
         const params = {
           id: taskId
         };
@@ -206,26 +165,25 @@
       },
 
       //Show current task fields modal for enable user to edit some infos.
-      showEditTaskModal: function(taskId) {
+      showEditTaskModal(taskId) {
         this.showModal = true;
         this.fillTaskModalFields(taskId);
       },
 
       // Just hide the modal
-      hideEditTaskModal: function() {
+      hideEditTaskModal() {
         this.showModal = false;
       },
 
       //Show task fields to user add a new task
-      showAddTaskFast: function() {
+      showAddTaskFast() {
         this.newTaskFast = true;
       },
 
       // Save in db all new values of a task
-      saveEditTask: function() {
-
-        this.$data.editModal.task_date = moment(this.$data.editModal.task_date, "DD/MM/YYYY").startOf('day').format();
-        this.$data.editModal.last_update = moment().format();
+      saveEditTask() {
+        this.$data.editModal.task_date = this.moment(this.$data.editModal.task_date, "DD/MM/YYYY").startOf('day').format();
+        this.$data.editModal.last_update = this.moment().format();
 
         const savedTaskPromises = this.EditTask(this.$data.editModal.id, this.$data.editModal);
 
@@ -242,12 +200,12 @@
       },
 
       // Complete a task
-      completeTask: function(taskId) {
+      completeTask(taskId) {
         let param = {
           isOpen: false,
           isComplete: true,
-          last_update: moment().format(),
-          ended_at: moment().format()
+          last_update: this.moment().format(),
+          ended_at: this.moment().format()
         }
 
         let editPromise = this.EditTask(taskId, param);
@@ -260,12 +218,12 @@
       },
 
       // Delete a task
-      deleteTask: function(taskId) {
+      deleteTask(taskId) {
         const param = {
           isOpen: false,
           isRemoved: true,
-          last_update: moment().format(),
-          ended_at: moment().format()
+          last_update: this.moment().format(),
+          ended_at: this.moment().format()
         }
 
         let editPromise = this.EditTask(taskId, param);
@@ -279,7 +237,7 @@
       },
 
       //Hide task fields.
-      hideAddTaskFast: function() {
+      hideAddTaskFast() {
         this.newTaskFast = false;
       }
     }

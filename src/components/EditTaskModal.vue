@@ -1,46 +1,39 @@
 <template :name="inputName">
-  <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
-            <slot name="header"></slot>
-          </div>
-          <div class="modal-body">
-            <slot name="body"></slot>
-          </div>
-          <div class="modal-footer">
-            <slot name="footer"></slot>
+  <div id="edit-task-modal">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container">
+            <div class="modal-header">
+              <slot name="header"></slot>
+            </div>
+            <div class="modal-body">
+              <slot name="body"></slot>
+            </div>
+            <div class="modal-footer">
+              <slot name="footer"></slot>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 
 <script>
+import mixins from '@/components/mixins'
 
-  import { Mixin } from 'semantic-ui-vue2';
-  import Tasks from './Tasks';
+export default {
+  name: 'EditTaskModal',
+  mixins: [mixins],
+  data() {
+    return {};
+  },
+  methods: {
 
-  const moment = require('moment');
-
-  export default {
-    name: 'EditTaskModal',
-    components: {
-      Tasks
-    },
-    mixins: [Mixin],
-    data() {
-      return {};
-    },
-    methods: {
-
-    }
-  };
-
-
+  }
+};
 </script>
 
 <style>

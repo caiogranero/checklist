@@ -19,22 +19,3 @@ Then, to run the app run `npm run dev` and you also need to run `json-server --w
 * Cancel a created task;
 * Edit a created task. In this step its able to give more information for your task, like description, remimber minute, change the name and the date;
 * For now, we have this features development.
-
-> For now, we have one critical bug. If you set a new task filter by status (Cancelado, Concluído ou Pendente), the changes will not show up. You need to change the period also. My bad :/
-
-### Used libraries
-
-I used those libraries to help me with the development.
-
-* [SweetAlert2]
-* [vue-sweetAlert]
-* [moment.js]
-* [semantic-ui-vue2]
-* [SemanticUI]
-
-[Vue.js]: <https://vuejs.org/>
-[SweetAlert2]: <http://t4t5.github.io/sweetalert/>
-[vue-sweetAlert]: <https://www.npmjs.com/package/vue-sweetalert>
-[moment.js]: <http://momentjs.com/>
-[semantic-ui-vue2]: <https://github.com/almino/semantic-ui-vue2>
-[SemanticUI]: <https://semantic-ui.com/>

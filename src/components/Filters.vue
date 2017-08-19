@@ -23,23 +23,26 @@
 
 
 <script>
+import mixins from './mixins'
 
-  export default {
-    name: 'Filters',
-    data() {
-      return {
-        filterFields: "isOpen"
-      };
-    },
-    methods: {
-
-      // Define o novo valor do filtro globalmente.
-      setFilter: function() {
-        this.$root.$data.filter = this.filterFields;
-        this.loadCurrentTasks();
-      }
+export default {
+  name: 'Filters',
+  mixins: [mixins],
+  data() {
+    return {
+      filterFields: 'isOpen'
     }
-  };
+  },
+  
+  methods: {
+
+    // Define o novo valor do filtro globalmente.
+    setFilter() {
+      this.$store.commit('setFilter', this.filterFields)
+      this.loadCurrentTasks()
+    }
+  }
+}
 
 </script>
 

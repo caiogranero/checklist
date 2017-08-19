@@ -18,13 +18,11 @@
 
 
 <script>
+import { Mixin } from 'semantic-ui-vue2';
 
-  import { Mixin } from 'semantic-ui-vue2';
-
-  export default {
-    mixins: [Mixin]
-  };
-
+export default {
+  mixins: [Mixin]
+}
 </script>
 
 <style>

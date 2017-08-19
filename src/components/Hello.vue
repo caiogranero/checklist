@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="hello">
     <ui-grid container>
       <ui-row>
         <ui-column class="four wide">
@@ -14,20 +14,13 @@
 </template>
 
 <script>
-
-import Vue from 'vue';
-import { Mixin } from 'semantic-ui-vue2';
-
-const $ = require('jquery');
-
 export default {
-  name: 'content',
-  mixins: [Mixin],
+  name: 'Hello',
   data() {
     return {
       period: 'Hoje',
-    };
+    }
   },
-};
+}
 
 </script>
