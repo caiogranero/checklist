@@ -1,26 +1,20 @@
 <template>
   <div id="filter">
-    <div class="item">
+    <div class="item" v-for="filter in filterType" :key="filter.value">
       <div class="ui toggle checkbox">
-        <input type="radio" name="filter" v-model="filterFields" value="isOpen" v-on:click="setFilter()" id="isOpen" checked>
-        <label>Pendente</label>
-      </div>
-    </div>
-    <div class="item">
-      <div class="ui toggle checkbox">
-        <input type="radio" name="filter" v-model="filterFields" value="isRemoved" v-on:click="setFilter()" id="isRemoved">
-        <label>Cancelado</label>
-      </div>
-    </div>
-    <div class="item">
-      <div class="ui toggle checkbox">
-        <input type="radio" name="filter" v-model="filterFields" value="isComplete" v-on:click="setFilter()" id="isComplete">
-        <label>Concluído</label>
+        <input 
+          :v-model="filter.checked"
+          :value="filter.value"
+          v-on:click="setFilter(filter.value)"
+          :id="filter.value"
+          :checked="filter.checked"
+          type="radio"
+          name="filter">
+        <label>{{filter.label}}</label>
       </div>
     </div>
   </div>
 </template>
-
 
 <script>
 import mixins from './mixins'
@@ -30,15 +24,31 @@ export default {
   mixins: [mixins],
   data() {
     return {
-      filterFields: 'isOpen'
+      filterType: [
+        {
+          label: 'Cancelado',
+          value: 'isRemoved',
+          checked: false
+        },
+        {
+          label: 'Pendente',
+          value: 'isOpen',
+          checked: true
+        },
+        {
+          label: 'Concluído',
+          value: 'isComplete',
+          checked: false
+        }
+      ]
     }
   },
   
   methods: {
 
-    // Define o novo valor do filtro globalmente.
-    setFilter() {
-      this.$store.commit('setFilter', this.filterFields)
+    // Set new filter value in state and load all tasks
+    setFilter(filter) {
+      this.$store.commit('setFilter', filter)
       this.loadCurrentTasks()
     }
   }
