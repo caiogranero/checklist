@@ -23,14 +23,12 @@
 
 <script>
 import { Mixin } from 'semantic-ui-vue2';
-import Tasks from './Tasks';
 import Datepicker from 'vuejs-datepicker';
-import mixins from './mixins';
+import mixins from '@/components/mixins';
 
 export default {
   name: 'NewTaskFast',
   components: {
-    Tasks,
     Datepicker
   },
   mixins: [mixins, Mixin],

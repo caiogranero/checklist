@@ -56,7 +56,7 @@
 
 
 <script>
-import mixins from '@/components/mixins'
+import mixins from '@/components/mixins';
 import Datepicker from 'vuejs-datepicker';
 require('izimodal');
 

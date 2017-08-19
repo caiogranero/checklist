@@ -39,10 +39,10 @@
 
 <script>
   import Vue from 'vue';
-  import mixins from './mixins'
+  import mixins from '@/components/mixins';
   import { Mixin } from 'semantic-ui-vue2';
-  import NewTaskFast from './NewTaskFast';
   import Datepicker from 'vuejs-datepicker';
+  import NewTaskFast from '@/components/Task/NewTaskFast';
   import EditTaskModal from '@/components/Task/EditTaskModal';
   require('izimodal');
 
