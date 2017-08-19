@@ -1,21 +1,24 @@
 <template>
-	<ui-row>
-		<ui-column class="sixteen wide">
-      <ui-form>
-			  <div class="field">
-          <div class="fields">
-            <div class="twelve wide field">
-              <input type="text" name="name" id="name" v-model="name" placeholder="Descrição da tarefa">
+  <ui-grid id="new-task-fast" container v-if="open">
+    <i class="close icon" v-on:click="hideAddTaskFast()"></i>
+    <ui-row>
+      <ui-column class="sixteen wide">
+        <ui-form>
+          <div class="field">
+            <div class="fields">
+              <div class="twelve wide field">
+                <input type="text" name="name" id="name" v-model="name" placeholder="Descrição da tarefa">
+              </div>
+              <div class="four wide field">
+                <datepicker name="date" id="date" placeholder="Data" v-model="date" language="pt-br" format="dd/MM/yyyy"></datepicker>
+              </div>
+              <input type="button" v-on:click="newTask()" class="ui button" value="Adicionar tarefa">
             </div>
-            <div class="four wide field">
-              <datepicker name="date" id="date" placeholder="Data" v-model="date" language="pt-br" format="dd/MM/yyyy"></datepicker>
-            </div>
-            <input type="button" v-on:click="newTask()" class="ui button" value="Adicionar tarefa">
           </div>
-			  </div>
-			</ui-form>
-		</ui-column>
-	</ui-row>
+        </ui-form>
+      </ui-column>
+    </ui-row>
+  </ui-grid>
 </template>
 
 <script>
@@ -34,9 +37,21 @@ export default {
   data() {
     return {
       date: null,
-      name: null
+      name: null,
+      open: false
     }
   },
+
+  props: {
+    openNewTaskFast: Boolean
+  },
+
+  watch: {
+    openNewTaskFast() {
+      this.open = true
+    }
+  },
+
   methods: {
 
     // Insert a new task in DB, based in name and date values inserted.
@@ -63,10 +78,14 @@ export default {
         // TODO: Emit a alert to the user.
         console.warn('Por favor, preencha todos os campos.');
       }
+    },
+
+    //Hide task fields.
+    hideAddTaskFast() {
+      this.open = false;
     }
   }
 }
-
 
 </script>
 

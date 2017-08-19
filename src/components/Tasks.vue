@@ -1,11 +1,6 @@
 <template>
-  <div class="content">
-
-    <!-- Tags above will show when click to add a new task -->
-    <ui-grid container v-if="newTaskFast">
-      <i class="close icon" v-on:click="hideAddTaskFast()"></i>
-      <new-task-fast></new-task-fast>
-    </ui-grid>
+  <div class="task">
+    <new-task-fast :openNewTaskFast="newTaskFast"></new-task-fast>
 
     <!-- Tags above will populate the task content -->
     <ui-grid container>
@@ -67,10 +62,10 @@
           month: "Esse mês"
         },
         newTaskFast: false,
-        currentTasks: [],
-        datesArray: [],
         editTask: false,
-        selectedTaskId: 0
+        selectedTaskId: 0,
+        currentTasks: [],
+        datesArray: []
       };
     },
     watch: {
@@ -79,7 +74,7 @@
       }
     },
 
-    mounted() {
+    created() {
       this.loadCurrentTasks(); //Load all pendent task on page load.
     },
 
@@ -131,11 +126,6 @@
         }, function() {
           this.$swal("Houve um erro enquanto removia a tarefa.", "", "error");
         });
-      },
-
-      //Hide task fields.
-      hideAddTaskFast() {
-        this.newTaskFast = false;
       }
     }
   }
