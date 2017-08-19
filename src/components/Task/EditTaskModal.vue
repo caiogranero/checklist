@@ -93,7 +93,6 @@ export default {
   },
 
   methods: {
-
     hideEditTaskModal() {
       this.openModal = false
       Object.keys(editModal).forEach((key) => {

@@ -88,7 +88,7 @@
 
       //Show task fields to user add a new task
       showAddTaskFast() {
-        this.newTaskFast = true;
+        this.newTaskFast = !this.newTaskFast;
       },
 
       // Complete a task
