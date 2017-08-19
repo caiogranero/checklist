@@ -16,8 +16,9 @@
   </div>
 </template>
 
-
 <script>
+//TODO: need to make action for all the header button.
+
 import { Mixin } from 'semantic-ui-vue2';
 
 export default {
