@@ -80,12 +80,8 @@ const mixins = {
     EditTask(idTask, newParams) {
       return this.$http.get(`http://localhost:3000/tasks/${idTask}`).then((response) => {
         const db = response.data;
-
-        Object.keys(newParams).forEach((key) => {
-          if (db[key] !== newParams[key]) {
-            db[key] = newParams[key];
-          }
-        });
+        
+        Object.assign(db, newParams);
 
         return this.$http.put(`http://localhost:3000/tasks/${idTask}`, JSON.stringify(db));
       });
